@@ -1,9 +1,12 @@
 # Lab 2 - Game states, forward models & AI agents
-## Some basic ideas
+## Some basic notes
 ### Tournament vs. game
 A game is a single run of a game, whereas a tournament includes repetitions of a single game with multiple matchups (between players). A tournament is created simply by specifying the number of matchups are more than 1 (we shall see where to indicate the number of matchups later). When talking about tournaments here, we are speaking specifically about "Round Robin" tournaments, wherein a single game and matchup is repeated sequentially.
 
-## Instantiating agents, running tournaments & gathering data
+### Implementation context
+All the implementation details (files to configure, classes to implement, functions to use, etc.) are given in the context of the TAG framework, which is implied. Also, we shall be working on Intellij IDEA as our IDE, but whenever implementational or operational details or steps are given with respect to this IDE, it shall be made explicit. The more general form of the implementational or operational details or steps will also be mentioned.
+
+## PRELIMINARY CONCEPTS:<br>Instantiating agents, running tournaments & gathering data
 ### Issues with the previous way of running games
 In the last session, we saw the use of the "Game" class to run the desired game with the GUI. Here, we faced two issues:
 
@@ -58,3 +61,30 @@ A "player" here is what we call an "agent". Here, we are specifically dealing wi
 - The heuristic (for the player) to use
 
 **SIDE NOTE**: The details about creating these files is given in the PDF document associated to this pab session. However, there is one point from this document I want to address. When creating the the one-step-look-ahead (OSLA) player, the "heuristics" field included all sorts of sub-fields (apart from the "class" field that refers to the class that implements the heuristic). However, these sub-fields were misplaced here; these do not apply to the "ScoreHeuristic" we are using. Rather, these apply to the "ColdExpressHeuristic" mentioned elsewhere. So, we can omit these sub-fields when using the "ScoreHeuristic".
+
+## CONCEPT 1: Game state
+A game state is the full context required, i.e. the set of all information required to (fully) describe the current game's running processes & environment in the current time. The game state helps us judge the current situation of the game and help see potential outcomes for decisions taken from the current situation. By its nature, the game state does not implement any game functions or features; after all, it is an container class (_i.e. it contains information_) and any functions it uses are only to access the contained information (_i.e. only uses accessor functions_) in a given way and to a given extent.
+
+The game state is modified by player actions and environmental changes (both regulated by the forward model, i.e. the game's rules applied (up to some potential game state) from the given game state). _Note that the player actions, environment changes and the forward model is where the game's functionalities are actually implemented_.
+
+In TAG, every game state class extends from (i.e. inherits and implements) the abstract class `core.AbstractGameState` (i.e. the `AbstractGameState` class within the "core" directory contained in "src/main/java"). This abstract class provides a lot of basic functionality and templates for further functionalities (_i.e. declares (but does not define) the functions that are to be implemented (i.e. defined) by any non-abstract subclass_).
+
+### Copy method
+The most important method (i.e. function) applicable to a game state is "copy", which does the following:
+
+- Deep copies the game state[^1]; this enables players to make simulations using these deep copies without modifying the original game state object
+- In case of partial information games, hides the information hidden to a given player when making a deep copy for it<br>**SIDE NOTE**: _If the argument_ `-1` _is given, no information is hidden_
+
+[^1]_"Deep copy" means creating a new separate object with identical values rather than simply creating a new identifier for the same object (shallow copy)_.
+
+## CONCEPT 2: Forward model
+A forward model (FM) is an object that encapsulates (computationally) the relationship between any given game state and the potential game states that can be derived from it through valid action(s) (_valid means possible in the given state_). Hence, an FM also includes a representation of the game's rules. Every player can obtain (on demand) a separate instance of the FM (i.e. each gets a separate FM object for the same game), enabling the player to:
+
+- See the potential consequences of its actions (i.e. simulate a game from a given game state)
+- Make valid actions (i.e. according to the game's rules)
+
+In TAG, every FM class extends from (i.e. inherits and implements) the abstract class `core.AbstractForwardModel` (i.e. the `AbstractForwardModel` class within the "core" directory contained in "src/main/java"). This abstract class provides the functionalities and templates for new FMs, effectively providing the functionalities and templates for new games. This abstract class' functionalities are embodied in separate functions:
+
+1. `_setup` (_sets up the initial game state_)
+2. `_next` (_progresses the game state based on the player's decision(s)_)
+3. `_computeAvailableActions` (_reveals the valid actions available to the next player_)
