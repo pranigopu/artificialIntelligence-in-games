@@ -10,7 +10,7 @@ A benchmark in computing is a test used to compare performance between multiple 
 ### Instantiation of a class (in object-oriented programming)
 Instantiation refers to (unless mentioned otherwise) the instantiation of a class, i.e. the creation of an object that concretizes (_i.e. realizes in execution_) the specifications of a class.
 
-_Note that a class is an encapsulation of attributes and methods (i.e. functions) that represents a programmable unit (a unit being an abstraction of a member of a group of similar members). An object is a particular programmable entity that shares its defining characteristics (attributes and methods) with the class, i.e. it is a particular member of the category, rather than a general representation of members of that category_.
+_Note that a class is an encapsulation of attributes and methods (i.e. functions) that represents a programmable unit (i.e. an abstract representation of a member of a group of similar members). An object is a particular programmable entity that shares its defining characteristics (attributes and methods) with the class, i.e. it is a particular member of the category, rather than a general representation of members of that category_.
 
 ## Folder = Directory
 "Folder" means practically the same thing as "directory". Folder is used in a Windows context while directory in a Linux context.
