@@ -1,7 +1,7 @@
 # Lab 2 - Game states, forward models & AI agents
 ## Some basic ideas
 ### Tournament vs. game
-A game is a single run of a game, whereas a tournament includes multiple games and matchups (between players). A tournament is created simply by specifying the number of matchups are more than 1 (we shall see where to indicate the number of matchups later).
+A game is a single run of a game, whereas a tournament includes repetitions of a single game with multiple matchups (between players). A tournament is created simply by specifying the number of matchups are more than 1 (we shall see where to indicate the number of matchups later). When talking about tournaments here, we are speaking specifically about "Round Robin" tournaments, wherein a single game and matchup is repeated sequentially.
 
 ## Testing game runs
 ### Issues with the previous way of running games
@@ -25,7 +25,7 @@ Of course, the path is given relative to our working directory, which is in our 
 #### Solving issue 2
 The second issue is easily solved by using the `evaluation.RunGames` class (instead of the `Game` class) found in the source file "src/main/java/evaluation/RunGames" (relative to the project directory of course). We can specify this in our configuration (in the "Edit Configurations" window) under the "Build and run" heading. The `RunGames` class helps us do two two things:
 
-- Run N number of repetitions of a game between different agents
+- Run N number of Round-Robin repetitions of a game between different agents
 - Gather & present data on the played games for
   - Each game in the tournament
   - Each agent in the tournament
