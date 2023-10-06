@@ -9,6 +9,7 @@ In the last session, we saw the use of the "Game" class to run the desired game 
 
 1. We had to edit the arguments in the source code to get the desired changes (ex. game to play, number of players, etc.)
 2. We could not obtain more detailed data about the performance of agents
+3. We could not run the same game repeatedly with different matchups to get more performance data
 
 #### Solving issue 1
 The first issue is through the use of JSON configurations, wherein we apply the configurations (specifically, what arguments to use) for a piece of code to run by (1) detailing them in a JSON file and (2) applying these configurations. This is possible because the TAG framework enables the use of JSON files to configure executables files (ex. source codes). The way we apply these configurations in the Intellij IDEA is through the "Edit Configurations" functionality under the "Run" option in the taskbar.
