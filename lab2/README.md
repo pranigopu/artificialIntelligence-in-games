@@ -7,7 +7,7 @@ A game is a single run of a game, whereas a tournament includes repetitions of a
 All the implementation details (files to configure, classes to implement, functions to use, etc.) are given in the context of the TAG framework, which is implied. Also, we shall be working on Intellij IDEA as our IDE, but whenever implementational or operational details or steps are given with respect to this IDE, it shall be made explicit. The more general form of the implementational or operational details or steps will also be mentioned.
 
 ### Instantiation
-Instantiation here generally refers to (unless mentioned otherwise) the instantiation of classes, i.e. the creation of an object that concretizes (_i.e. realizes in execution_) the specifications of a class (_i.e. an encapsulation of attributes and methods (i.e. functions) that represent a single programmable entity_).
+Instantiation here generally refers to (unless mentioned otherwise) the instantiation of classes, i.e. the creation of an object that concretizes (_i.e. realizes in execution_) the specifications of a class (_note that a class is an encapsulation of attributes and methods (i.e. functions) that represent a single programmable entity_).
 
 ## PRELIMINARY CONCEPTS:<br>Instantiating agents, running tournaments & gathering data
 ### Issues with the previous way of running games
