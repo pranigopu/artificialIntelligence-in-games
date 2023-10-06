@@ -19,9 +19,9 @@ Of course, the path is given relative to our working directory, which is in our 
 `config=json/experiments/rungames0.json`
 
 #### Solving issue 2
-The second issue is easily solved by using the `evaluation.RunGames` class (instead of the `Game` class) found in the source file "src/main/evaluation/RunGames" (relative to the project directory of course). We can specify this in our configuration (in the "Edit Configurations" window) under the "Build and run" heading.
+The second issue is easily solved by using the `evaluation.RunGames` class (instead of the `Game` class) found in the source file "src/main/java/evaluation/RunGames" (relative to the project directory of course). We can specify this in our configuration (in the "Edit Configurations" window) under the "Build and run" heading.
 
-### More on the JSON configuration files
+### More on the application configuration JSON files
 _The extensive details are given in this lab session's associated PDF file. Here, we shall look at certain key points not mentioned._
 
 #### "listener" field
@@ -34,3 +34,14 @@ This is short for "destination directory". This specifies the directory within w
 
 #### "output" field
 This specifies the particular file within the destination directory wherein we want to store our outputs. We can use any type of plaintext file (ex. ".txt"), but if we use the extension ".log", we will get our logs (i.e. output data) stored in a better format (i.e. the IDE will be able to recognize the file type and format the text accordingly).
+
+#### "playerDirectory" field + creating players to test
+This field specifies the directory within which we can find the configuration files for the players of the game/tournament we want to run. We shall discuss these player configuration files later.
+
+### Player configuration files
+A "player" here is what we call an "agent". Here, we are specifically dealing with AI agents. These are JSON files that have specify:
+
+- The player class to implement<br>(_player class source files found in "src/main/java/players"_)
+- The heuristic (for the player) to use
+
+The details about creating these files is given in the PDF document associated to this pab session. However, there is one point from this document I want to address. When creating the the one-step-look-ahead (OSLA) player, the "heuristics" field included all sorts of sub-fields (apart from the "class" field that refers to the class that implements the heuristic). However, these sub-fields were misplaced here; these do not apply to the "ScoreHeuristic" we are using. Rather, these apply to the "ColdExpressHeuristic" mentioned elsewhere. So, we can omit these sub-fields when using the "ScoreHeuristic".
