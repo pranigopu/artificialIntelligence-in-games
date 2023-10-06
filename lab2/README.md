@@ -3,7 +3,7 @@
 ### Tournament vs. game
 A game is a single run of a game, whereas a tournament includes repetitions of a single game with multiple matchups (between players). A tournament is created simply by specifying the number of matchups are more than 1 (we shall see where to indicate the number of matchups later). When talking about tournaments here, we are speaking specifically about "Round Robin" tournaments, wherein a single game and matchup is repeated sequentially.
 
-## Running tournaments, creating agents & gathering data
+## Running tournaments for available agents & gathering data
 ### Issues with the previous way of running games
 In the last session, we saw the use of the "Game" class to run the desired game with the GUI. Here, we faced two issues:
 
@@ -52,7 +52,7 @@ This specifies the particular file within the destination directory wherein we w
 This field specifies the directory within which we can find the configuration files for the players of the game/tournament we want to run. We shall discuss these player configuration files later.
 
 ### Player configuration files
-A "player" here is what we call an "agent". Here, we are specifically dealing with AI agents. These are JSON files that have specify:
+A "player" here is what we call an "agent". Here, we are specifically dealing with AI agents. Note that we are not creating new agents yet, we are only instantiating existing agents (specifically instantiating the player classes that define them). Player configuration files are JSON files that have specify:
 
 - The player class to implement<br>(_player class source files found in "src/main/java/players"_)
 - The heuristic (for the player) to use
