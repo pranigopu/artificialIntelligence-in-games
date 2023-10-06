@@ -33,7 +33,8 @@ A listener in Java is a subroutine (_i.e. a set of instructions to perform a fre
 
 **IMPORTANT NOTE**: Without specifying a listener, the application will be unable to trigger the storing of the generated output. In such cases, the output will be given in the console itself. If the listener is provided, no output will appear on the console, only in the specified file.
 
-#### "matchup
+#### "mode" field & "matchups" field
+The "matchups" field specifies the number of games to be played in a single execution of the application. The "mode" field specifies how the matchups are made; the "exhaustive" option means each player will play against every other player, the "random" option means players will be assigned to each other randomly.
 
 #### "destDir" field
 This is short for "destination directory". This specifies the directory within which any outputs must be stored.
