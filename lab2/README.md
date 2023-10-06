@@ -8,7 +8,7 @@ A game is a single run of a game, whereas a tournament includes multiple games a
 In the last session, we saw the use of the "Game" class to run the desired game with the GUI. Here, we faced two issues:
 
 1. We had to edit the arguments in the source code to get the desired changes (ex. game to play, number of players, etc.)
-2. We could not obtain more detailed data about the games (ex. performance of various agents)
+2. We could not obtain more detailed data about the performance of agents
 
 #### Solving issue 1
 The first issue is through the use of JSON configurations, wherein we apply the configurations (specifically, what arguments to use) for a piece of code to run by (1) detailing them in a JSON file and (2) applying these configurations. This is possible because the TAG framework enables the use of JSON files to configure executables files (ex. source codes). The way we apply these configurations in the Intellij IDEA is through the "Edit Configurations" functionality under the "Run" option in the taskbar.
@@ -23,7 +23,12 @@ Of course, the path is given relative to our working directory, which is in our 
 `config=json/experiments/rungames0.json`
 
 #### Solving issue 2
-The second issue is easily solved by using the `evaluation.RunGames` class (instead of the `Game` class) found in the source file "src/main/java/evaluation/RunGames" (relative to the project directory of course). We can specify this in our configuration (in the "Edit Configurations" window) under the "Build and run" heading.
+The second issue is easily solved by using the `evaluation.RunGames` class (instead of the `Game` class) found in the source file "src/main/java/evaluation/RunGames" (relative to the project directory of course). We can specify this in our configuration (in the "Edit Configurations" window) under the "Build and run" heading. The `RunGames` class helps us do two two things:
+
+- Run N number of repetitions of a game between different agents
+- Gather & present data on the played games for
+  - Each game in the tournament
+  - Each agent in the tournament
 
 ### More on the application configuration JSON files
 _The extensive details are given in this lab session's associated PDF file. Here, we shall look at certain key points not mentioned._
