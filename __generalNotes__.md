@@ -1,5 +1,5 @@
 # General notes
-## Common abbreviations, terms & confusions
+## Common terms & term-related confusions
 - CLI: Command Line Interface
 - GUI: Graphical User Interface
 - Note that in object-oriented programming, "method" means the same thing as "function"
