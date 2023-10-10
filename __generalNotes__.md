@@ -18,7 +18,7 @@ Instantiation refers to (unless mentioned otherwise) the instantiation of a clas
 _In Java, an abstract class cannot be directly instantiated, but it can be instantiated indirectly through an concrete subclass_.
 
 **SIDE NOTE 2**: INDIRECT INSTANTIATION OF A PARENT CLASS<br>
-_An object of a subclass B of a parent class A is also an instantiation (indirectly, but still) of the parent class A, since a subclass is logically contained within the parent class. The code also considers it as such, since if a method specifies the object of a certain class as its parameter (i.e. argument), it also accepts an object of this class's subclass for this parameter_.
+_An object of a subclass B of a parent class A is also an instantiation (indirectly, but still) of the parent class A, since a subclass is logically contained within the parent class. Java also considers it as such, since if a method specifies the object of a certain class as its parameter (i.e. argument), it also accepts an object of this class's subclass for this parameter_.
 
 ### Overloading
 This is a feature in some programming languages (ex. Java) that allow the same name to be used for different functions provided that the function definitions have specified different parameters as arguments. Hence, these functions with the same name are distinguished by the parameters they accept.
