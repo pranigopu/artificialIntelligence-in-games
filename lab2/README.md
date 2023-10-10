@@ -7,7 +7,7 @@ A game is a single run of a game, whereas a tournament includes repetitions of a
 All the implementation details (files to configure, classes to implement, functions to use, etc.) are given in the context of the TAG framework, which is implied. Also, we shall be working on Intellij IDEA as our IDE, but whenever implementational or operational details or steps are given with respect to this IDE, it shall be made explicit. The more general form of the implementational or operational details or steps will also be mentioned.
 
 ### Instantiation
-Instantiation here generally refers to (unless mentioned otherwise) the instantiation of a class, i.e. the creation of an object from a given class.
+Instantiation here generally refers to (unless mentioned otherwise) the instantiation of classes, i.e. the creation of an object for a given class.
 
 ## PRELIMINARY CONCEPTS:<br>Instantiating agents, running tournaments & gathering data
 ### Issues with the previous way of running games
@@ -66,7 +66,7 @@ A "player" here is what we call an "agent". Here, we are specifically dealing wi
 **SIDE NOTE**: The details about creating these files is given in the PDF document associated to this pab session. However, there is one point from this document I want to address. When creating the the one-step-look-ahead (OSLA) player, the "heuristics" field included all sorts of sub-fields (apart from the "class" field that refers to the class that implements the heuristic). However, these sub-fields were misplaced here; these do not apply to the "ScoreHeuristic" we are using. Rather, these apply to the "ColdExpressHeuristic" mentioned elsewhere. So, we can omit these sub-fields when using the "ScoreHeuristic".
 
 ## CONCEPT 1: Game state
-A game state is the full context required, i.e. the set of all information required to (fully) describe the current game's running processes & environment in the current time. The game state helps us judge the current situation of the game and help see potential outcomes for decisions taken from the current situation. By its nature, the game state does not implement any game functions or features; after all, it is an container class (_i.e. it contains information_) and any functions it uses are only to access the contained information (_i.e. only uses accessor functions_) in a given way and to a given extent.
+A game state is the full context required, i.e. the set of all information required to (fully) describe the current game's running processes & environment in the current time. The game state helps us judge the current situation of the game and help see potential outcomes for decisions taken from the current situation (_in the context of AI agents, a game state's deep copy made for a particular agent encapsulates what the agent can observe in the game; a game state's deep copy is discussed further below_). By its nature, the game state does not implement any game functions or features; after all, it is an container class (_i.e. it contains information_) and any functions it uses are only to access the contained information (_i.e. only uses accessor functions_) in a given way and to a given extent.
 
 The game state is modified by player actions and environmental changes (both regulated by the forward model, i.e. the game's rules applied (up to some potential game state) from the given game state). _Note that the player actions, environment changes and the forward model is where the game's functionalities are actually implemented_.
 
@@ -86,8 +86,36 @@ A forward model (FM) is an object that encapsulates (computationally) the relati
 - See the potential consequences of its actions (i.e. simulate a game from a given game state)
 - Make valid actions (i.e. according to the game's rules)
 
-In TAG, every FM class extends from (i.e. inherits and implements) the abstract class `core.AbstractForwardModel` (i.e. the `AbstractForwardModel` class within the "core" directory contained in "src/main/java"). This abstract class provides the functionalities and templates for new FMs, effectively providing the functionalities and templates for new games. This abstract class' functionalities are embodied in separate functions:
+In TAG, every FM class extends from (i.e. inherits and implements) the abstract class `core.AbstractForwardModel` (i.e. the `AbstractForwardModel` class within the "core" directory contained in "src/main/java"). This abstract class provides the functionalities and templates for new FMs, effectively providing the functionalities and templates for new games. This abstract class's functionalities are embodied in separate functions (which must be implemented by any class that extends this abstract class):
 
-1. `_setup` (_sets up the initial game state_)
-2. `_next` (_progresses the game state based on the player's decision(s)_)
-3. `_computeAvailableActions` (_reveals the valid actions available to the next player_)
+1. `_setup` (_to set up the initial game state_)
+2. `_next` (_to progress the game state based on the player's decision(s)_)
+3. `_computeAvailableActions` (_to reveal the valid actions available to the next player_)
+
+## CONCEPT 3: AI agents
+In TAG, every agent has to extend from (i.e. inherit and implement) the abstract class `core.AbstractPlayer` (i.e. the `AbstractPlayer` class within the "core" directory contained in "src/main/java") and implement the following methods of this abstract class:
+
+- `_getActions`
+	- Accepts two parameters as arguments:
+		- _**observation**_: a game state object (_of a concrete class that inherits & implements the abstract class_ `core.AbstractGameState`) that is particular to the agent's its perspective, i.e. encapsulates everything the agent can observe (_including private & common elements_)
+		- _**list of available actions**_: an array of action objects (_of one or more defined action classes which inherit & implement the abstract class _ `core.AbstractAction`) based on the available actions at a given game state computer by the forward model (_as implemented by the programmer_)
+- `copy`
+	- Accepts no parameters (i.e. has no arguments)
+	- Returns a copy of the agent (may by a shallow or deep copy, depending on the implementation)
+
+**NOTE**: When a method's definition or declaration specifies the object of a certain class (including an abstract class) as a certain parameter (i.e. argument), this method would also accept any object from this class's subclass for this parameter; after all, an object of subclass B of parent class A is technically an indirect instantiation of the parent class A.
+
+Furthermore, there are certain methods of `core.AbstractPlayer` that can be overridden[^2] by subclasses that implement this abstract class; these are listed, and their core functionalities and possible overrides/changes to their functionalities are explained in the PDF document for this lab session (_lab2-guide.pdf_). To list these methods:
+	- `initializePlayer`
+	- `finalizePlayer`
+	- `toString`
+	- `registerUpdatedObservations`
+	- `setForwardModel`
+	- `getDecisionStats`
+
+[^2]_Overriding a parent class's method refers to a redefinition (by a subclass that inherits the parent class) of a certain function defined in the parent class_.
+
+**NOTE**: You can see some AI agents that have already been implemented in the TAG framework; their code can be found in the directory "src/main/java/players".
+
+### Defining heuristics
+You can add a heuristic function to your AI agent by defining and instantiating a class that implements the interface `core.interfaces.IStateHeuristic` (i.e. the `IStateHeuristic` interface found in the "interfaces directory in "src/main/java/core"). Heuristic classes for some games have already been implemented in TAG, such as the heuristic `TicTacToeHeuristic` defined in the directory "src/main/java/games/tictactoe".
