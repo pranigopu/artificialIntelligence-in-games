@@ -9,6 +9,8 @@ TAG is a Java-based benchmark[^1] for developing board games for AI research. TA
 - A bunch of example games already created
 - Logging functionality (to analyze the games in operation)
 
+[^1]:A benchmark in computing is a test used to compare performance between multiple objects/systems (hardware or software), either against each other or against an accepted standard. In the case of TAG, it is a framework that offers an environment that enables you to develop, test and compare AI-based board games.
+
 ## TAG installation notes
 
 - Prerequisites:
@@ -58,5 +60,3 @@ _For TAG, the appropriate executable to run existing games is the JAR file for t
 ### Notes for finding the main source code
 
 The main source code that can be executed is the "Games.java" file found in the subfolder `TabletopGames\src\main\java\core`. Simply run the code to execute it. To change the game being run, modify the `gameType` string variable in the main function (`public static void main`) (modify the third argument of the function call on the right hand side). Make sure that the game's name that you enter is valid (i.e. exists within the project framework).
-
-[^1]:A benchmark in computing is a test used to compare performance between multiple objects/systems (hardware or software), either against each other or against an accepted standard. In the case of TAG, it is a framework that offers an environment that enables you to develop, test and compare AI-based board games.
