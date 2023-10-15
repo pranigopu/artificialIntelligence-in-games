@@ -21,4 +21,4 @@ Explore the three aforementioned methods and answer the following:
 2. How does selection stop & move on to expansion?
 3. How is an action chosen to add a new node (expansion step)?
 4. How are actions chosen for rollout & when does a rollout terminate?
-5. How is backpropagation done? To elaborate, how is the final state of a rollout evaluated & how are each node's statistics then updated?
+5. How is backpropagation done? _To elaborate, how is the final state of a rollout evaluated & how are each node's statistics then updated?_
