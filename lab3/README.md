@@ -78,8 +78,8 @@ In the code of the `ucb` method,  the current state is the `BasicTreeNode` objec
 #### UCB1 calculation
 Without getting into mathematical detail, the UCB1 value is calculated for a given state $s$ and given action $a$ as:
 
-$UCB1(s,a)$
-$=Exploitation Term + Exploration Term$
+$UCB1(s,a)$<br>
+$=Exploitation Term + Exploration Term$<br>
 $=Q(s,a)+K \times ln(\frac{N(s)+1}{N(s,a)})$
 
 where
