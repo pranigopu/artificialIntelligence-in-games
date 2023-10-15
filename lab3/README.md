@@ -24,3 +24,51 @@ Explore the three aforementioned methods and answer the following:
 5. How is backpropagation done? _To elaborate, how is the final state of a rollout evaluated & how are each node's statistics then updated?_
 
 ### Responses
+#### 1
+For reference, here is the code for the `ucb` method of the `BasicTreeNode` class (this method calculates the UCB1 value):
+
+```
+private AbstractAction ucb() {
+  // Find child with highest UCB value, maximising for ourselves and minimizing for opponent
+  AbstractAction bestAction = null;
+  double bestValue = -Double.MAX_VALUE;
+
+  for (AbstractAction action : children.keySet()) {
+      BasicTreeNode child = children.get(action);
+      if (child == null)
+          throw new AssertionError("Should not be here");
+      else if (bestAction == null)
+          bestAction = action;
+
+      // Find child value
+      double hvVal = child.totValue;
+      double childValue = hvVal / (child.nVisits + player.params.epsilon);
+
+      // default to standard UCB
+      double explorationTerm = player.params.K * Math.sqrt(Math.log(this.nVisits + 1) / (child.nVisits + player.params.epsilon));
+      // unless we are using a variant
+
+      // Find 'UCB' value
+      // If 'we' are taking a turn we use classic UCB
+      // If it is an opponent's turn, then we assume they are trying to minimise our score (with exploration)
+      boolean iAmMoving = state.getCurrentPlayer() == player.getPlayerID();
+      double uctValue = iAmMoving ? childValue : -childValue;
+      uctValue += explorationTerm;
+
+      // Apply small noise to break ties randomly
+      uctValue = noise(uctValue, player.params.epsilon, player.rnd.nextDouble());
+
+      // Assign value
+      if (uctValue > bestValue) {
+          bestAction = action;
+          bestValue = uctValue;
+      }
+  }
+
+  if (bestAction == null)
+      throw new AssertionError("We have a null value in UCT : shouldn't really happen!");
+
+  root.fmCallsCount++;  // log one iteration complete
+  return bestAction;
+}
+```
