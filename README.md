@@ -1,5 +1,5 @@
 # Artificial intelligence in games
-Code from my learnings in the first semester module "Artificial Intelligence in Games" of my MSc. AI course.
+Code from my learnings in the first semester module "Artificial Intelligence in Games" of my MSc. AI degree.
 
 ## Lab sessions list
 - Lab 1: Getting started with TAG (Tabletop Games Framework)
