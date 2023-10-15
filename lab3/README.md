@@ -18,9 +18,9 @@ The `mctsSearch` method of this class runs the main loop of the MCTS algorithm. 
 Explore the three aforementioned methods and answer the following:
 
 1. Explain the different lines of code in the UCB1 calculation
-2. How does selection stop & move on to expansion?
-3. How is an action chosen to add a new node (expansion step)?
-4. How are actions chosen for rollout & when does a rollout terminate?
-5. How is backpropagation done? To elaborate:
+- How does selection stop & move on to expansion?
+- How is an action chosen to add a new node (expansion step)?
+- How are actions chosen for rollout & when does a rollout terminate?
+- How is backpropagation done? To elaborate:
   - How is the final state of a rollout evaluated?
   - Once the above is done, how are each node's statistics updated?
