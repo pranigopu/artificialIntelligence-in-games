@@ -1,4 +1,7 @@
 # Lab 3: MCTS & stochastic games
+
+$UCB1(s,a)=Exploitation Term + K \x Exploration Term$
+
 ## Exercise 1
 ### Introduction
 Tree nodes are implemented in the class `players.mcts.BasicTreeNode` (i.e. the `BasicTreeNode` class in the directory "src/main/java/players/basicMCTS"). This class implements the different functions of MCTS required to be done from a tree node, namely:
