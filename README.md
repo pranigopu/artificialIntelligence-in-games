@@ -4,4 +4,6 @@ Code from my learnings in the first semester module "Artificial Intelligence in 
 ## Lab sessions list
 - Lab 1: Getting started with TAG (Tabletop Games Framework)
 - Lab 2: Game states, forward models & AI agents (TAG)
-- Lab 3: MCTS & 
+- Lab 3: MCTS & stochastic games
+
+ 
