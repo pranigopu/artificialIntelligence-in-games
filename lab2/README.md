@@ -1,4 +1,4 @@
-# Lab 2 - Game states, forward models & AI agents
+# Lab 2: Game states, forward models & AI agents
 ## Some basic notes
 ### Tournament vs. game
 A game is a single run of a game, whereas a tournament includes repetitions of a single game with multiple matchups (between players). A tournament is created simply by specifying the number of matchups are more than 1 (we shall see where to indicate the number of matchups later). When talking about tournaments here, we are speaking specifically about "Round Robin" tournaments, wherein a single game and matchup is repeated sequentially.
