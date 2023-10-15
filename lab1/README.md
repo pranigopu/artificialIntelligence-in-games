@@ -1,4 +1,4 @@
-# Lab 1 - Getting started with TAG
+# Lab 1: Getting started with TAG
 (_**TAG: Tabletop Games Framework**_)
 
 TAG is a Java-based benchmark[^1] for developing board games for AI research. TAG offers the following:
