@@ -59,6 +59,4 @@ _For TAG, the appropriate executable to run existing games is the JAR file for t
 
 The main source code that can be executed is the "Games.java" file found in the subfolder `TabletopGames\src\main\java\core`. Simply run the code to execute it. To change the game being run, modify the `gameType` string variable in the main function (`public static void main`) (modify the third argument of the function call on the right hand side). Make sure that the game's name that you enter is valid (i.e. exists within the project framework).
 
-## ENDNOTES
-
-[^1] A benchmark in computing is a test used to compare performance between multiple objects/systems (hardware or software), either against each other or against an accepted standard. In the case of TAG, it is a framework that offers an environment that enables you to develop, test and compare AI-based board games.
+[^1]:A benchmark in computing is a test used to compare performance between multiple objects/systems (hardware or software), either against each other or against an accepted standard. In the case of TAG, it is a framework that offers an environment that enables you to develop, test and compare AI-based board games.
