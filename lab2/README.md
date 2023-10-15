@@ -105,7 +105,7 @@ In TAG, every agent has to extend from (i.e. inherit and implement) the abstract
 
 **NOTE**: When a method's definition or declaration specifies the object of a certain class (including an abstract class) as a certain parameter (i.e. argument), this method would also accept any object from this class's subclass for this parameter; after all, an object of subclass B of parent class A is technically an indirect instantiation of the parent class A.
 
-Furthermore, there are certain methods of `core.AbstractPlayer` that can be overridden [^2] by subclasses that implement this abstract class; these are listed, and their core functionalities and possible overrides/changes to their functionalities are explained in the PDF document for this lab session (_lab2-guide.pdf_). To list these methods:
+Furthermore, there are certain methods of `core.AbstractPlayer` that can be (overridden)[^2] by subclasses that implement this abstract class; these are listed, and their core functionalities and possible overrides/changes to their functionalities are explained in the PDF document for this lab session (_lab2-guide.pdf_). To list these methods:
 
 - `initializePlayer`
 - `finalizePlayer`
@@ -114,7 +114,7 @@ Furthermore, there are certain methods of `core.AbstractPlayer` that can be over
 - `setForwardModel`
 - `getDecisionStats`
 
-[^2]_Overriding a parent class's method refers to a redefinition (by a subclass that inherits the parent class) of a certain function defined in the parent class_.
+[^2](Overriding a parent class's method refers to a redefinition (by a subclass that inherits the parent class) of a certain function defined in the parent class_.)
 
 **NOTE**: You can see some AI agents that have already been implemented in the TAG framework; their code can be found in the directory "src/main/java/players".
 
