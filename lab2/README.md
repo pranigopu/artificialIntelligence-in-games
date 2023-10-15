@@ -78,7 +78,7 @@ The most important method (i.e. function) applicable to a game state is "copy", 
 - Deep copies the game state[^1]; this enables players to make simulations using these deep copies without modifying the original game state object
 - In case of partial information games, hides the information hidden to a given player when making a deep copy for it<br>**SIDE NOTE**: _If the argument_ `-1` _is given, no information is hidden_
 
-[^1]:"Deep copy" means creating a new separate object with identical values rather than simply creating a new identifier for the same object (shallow copy)_.
+[^1]:"Deep copy" means creating a new separate object with identical values rather than simply creating a new identifier for the same object (shallow copy).
 
 ## CONCEPT 2: Forward model
 A forward model (FM) is an object that encapsulates (computationally) the relationship between any given game state and the potential game states that can be derived from it through valid action(s) (_valid means possible in the given state_). Hence, an FM also includes a representation of the game's rules. Every player can obtain (on demand) a separate instance of the FM (i.e. each gets a separate FM object for the same game), enabling the player to:
@@ -114,7 +114,7 @@ Furthermore, there are certain methods of `core.AbstractPlayer` that can be over
 - `setForwardModel`
 - `getDecisionStats`
 
-[^2]:Overriding a parent class's method refers to a redefinition (by a subclass that inherits the parent class) of a certain function defined in the parent class_.
+[^2]:Overriding a parent class's method refers to a redefinition (by a subclass that inherits the parent class) of a certain function defined in the parent class.
 
 **NOTE**: You can see some AI agents that have already been implemented in the TAG framework; their code can be found in the directory "src/main/java/players".
 
