@@ -16,7 +16,7 @@ TAG is a Java-based benchmark[^1] for developing board games for AI research. TA
 	- A Java IDE (preferably IntelliJ IDEA, for reasons discussed later)
 	- GitHub Desktop (for enabling you to clone repositories) (_cloning a GitHub repository simply means downloading a copy of it on your system_)
 
-Clone the [TAG GitHub repository](git clone https://github.com/GAIGResearch/TabletopGames) on your system (in any desired location). The repository folder is your project folder.
+Clone the [TAG GitHub repository](https://github.com/GAIGResearch/TabletopGames) on your system (in any desired location). The repository folder is your project folder.
 
 ### Notes for IntelliJ IDEA IDE
 
