@@ -1,1 +1,1 @@
-# Lab 3: MCTS & stochastic games
+# Lab 3 - MCTS & stochastic games
