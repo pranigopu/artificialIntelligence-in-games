@@ -1,7 +1,7 @@
 # Lab 3: MCTS & stochastic games
 ## Exercise 1
 ### Introduction
-Tree nodes are implemented in the class `players.mcts.BasicTreeNode` (i.e. the `BasicTreeNode` class in the directory "src/main/java/players/basicMCTS"). This class implements the different functions of MCTS required to be done from a tree node, namely:
+Tree nodes are implemented in the class `players.basicMCTS.BasicTreeNode` (i.e. the `BasicTreeNode` class in the directory "src/main/java/players/basicMCTS"). This class implements the different functions of MCTS required to be done from a tree node, namely:
 
 - Tree policy
 - Rollout/Monte Carlo simulation
@@ -23,8 +23,7 @@ Explore the three aforementioned methods and answer the following:
 4. How are actions chosen for rollout & when does a rollout terminate?
 5. How is backpropagation done? _To elaborate, how is the final state of a rollout evaluated & how are each node's statistics then updated?_
 
-### Responses
-#### 1
+### Response for question 1
 For reference, here is the code for the `ucb` method of the `BasicTreeNode` class (this method calculates the UCB1 value):
 
 ```
@@ -72,3 +71,31 @@ private AbstractAction ucb() {
   return bestAction;
 }
 ```
+
+#### Main loop of the `ucb` method
+In the code of the `ucb` method,  the current state is the `BasicTreeNode` object that calls this method; remember that this method is a method of the `BasicTreeNode` class. The currently considered action from the current state is given by the `action` variable defined in the initial line of the main for loop of the method. We consider the actions from the current state iteratively (one by one) using the for loop, calculating the UCB1 value for each of them and keeping track of which action is best (i.e. has the highest UCB1 value). The `bestAction` variable keeps track of the best action so far, and the `bestValue` variable keeps track of the highest UCB1 value so far (which should naturally be of the best action; these variables must be updated together).
+
+#### UCB1 calculation
+Without getting into mathematical detail, the UCB1 value is calculated for a given state $s$ and given action $a$ as:
+
+$UCB1(s,a)$
+$=Exploitation Term + Exploration Term$
+$=Q(s,a)+K \times ln(\frac{N(s)+1}{N(s,a)})$
+
+where
+
+- $Q(s,a)$ is the reward function returning the reward of action $a$ from state $s$
+- $N(s)$ is the number of times state $s$ has been visited
+- $N(s,a)$ is the number of times action $a$ has been taken from state $s$
+- $K$ is the exploration constant
+
+The exploitation term shifts the value toward known high-reward actions, whereas the exploration term shifts the value toward less explored actions (_that could have greater potential reward; we need to explore more to know more_).  In the equation above as well as in the class `players.basicMCTS.BasicMCTSParams`, we see the parameter $K$; this is the exploration constant. It is a multiplier in the exploration term and determines the weightage given to the exploration term.
+
+In the `ucb` method, the UCB1 value is calculated for each action of the current state; these actions are considered iteratively in the main for loop of the method. The exploration term is calculated similarly to the aforementioned formula, where:
+
+- `this.nVisits` is $N(s)$
+- `child.nVisits` is $N(s,a)$
+
+One small change from our formula is that the code adds a small constant `players.params.epsilon` to $N(s,a)$; I was unable to understand its purpose. Now, note the following key point...
+
+**Representing** $N(s,a)$ **as** `child.nVisits`:<br>The `child` variable defined in the `ucb` method denotes a particular child node of the current node, and nodes represent states not actions. However, since every child node is only reachable via a particular action from the current node, the number of times the child node was visited is the same as the number of times the particular action was taken from the current node.
