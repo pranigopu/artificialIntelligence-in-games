@@ -107,12 +107,12 @@ In TAG, every agent has to extend from (i.e. inherit and implement) the abstract
 
 Furthermore, there are certain methods of `core.AbstractPlayer` that can be overridden[^2] by subclasses that implement this abstract class; these are listed, and their core functionalities and possible overrides/changes to their functionalities are explained in the PDF document for this lab session (_lab2-guide.pdf_). To list these methods:
 
-	- `initializePlayer`
-	- `finalizePlayer`
-	- `toString`
-	- `registerUpdatedObservations`
-	- `setForwardModel`
-	- `getDecisionStats`
+- `initializePlayer`
+- `finalizePlayer`
+- `toString`
+- `registerUpdatedObservations`
+- `setForwardModel`
+- `getDecisionStats`
 
 [^2]_Overriding a parent class's method refers to a redefinition (by a subclass that inherits the parent class) of a certain function defined in the parent class_.
 
