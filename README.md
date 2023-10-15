@@ -10,15 +10,14 @@ Code from my learnings in the first semester module "Artificial Intelligence in 
 - Cloning a GitHub repository simply means downloading a copy of it on your system
 - GitHub supports linked footnotes in its markdown files
 
-# General conceptual & technical notes
-## Common terms & term-related confusions
+## General conceptual & technical notes
+### Common terms & term-related confusions
 - CLI: Command Line Interface
 - GUI: Graphical User Interface
 - OOP: Object Oriented Progamming
 - Note that in object-oriented programming, "method" means the same thing as "function"
 - "Folder" means practically the same thing as "directory". Folder is used in a Windows context while directory in a Linux context.
 
-## Useful computing concepts used in the labs
 ### Benchmark (in computing)
 A benchmark in computing is a test used to compare performance between multiple objects/systems (hardware or software), either against each other or against an accepted standard. For example, it could be a framework that offers an environment that enables you to develop, test and compare software modules.
 
