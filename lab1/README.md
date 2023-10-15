@@ -27,9 +27,7 @@ Clone the [TAG GitHub repository](https://github.com/GAIGResearch/TabletopGames)
 - Next, you will be prompted to import the project; select the option "Import project from external model" (_this option enables you to create a model of your project using one of the listed tools and import this model along with the original source code files; the need for this is discussed next_)
 - Among the tools listed, pick "Maven"; this tool will automatically build an executable project model (_compiling and combining all the required dependencies for the main source code(s)) that will enable you to test the code directly_)
 
-_Maven (i.e. Apache Maven) is discussed further in the section below_.
-
-**_IntelliJ IDEA IDE is preferred as it automates the process of installing and using Maven to build a testable project model_**.
+_Maven (i.e. Apache Maven) is discussed further in the section below_. IntelliJ IDEA IDE is preferred as it automates the process of installing and using Maven to build a testable project model.
 
 ### Notes for non-IntelliJ IDEA IDE's
 #### Apache Maven
