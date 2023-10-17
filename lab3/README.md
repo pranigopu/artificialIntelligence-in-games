@@ -19,7 +19,7 @@ Tree nodes are implemented in the class `players.basicMCTS.BasicTreeNode` (i.e. 
 
 The `mctsSearch` method of this class runs the main loop of the MCTS algorithm. This method in turn uses three methods to handle the four aforementioned steps of the algorithm. These methods are:
 
-- `treePolicy`: Performs selection (using UCB1[^1]) & expansion
+- `treePolicy`: Performs selection (using UCB1 (discussed later)) & expansion
 - `rollOut`: Performs the Monte Carlo simulation
 - `backUp`: Performs the backpropagation
 
