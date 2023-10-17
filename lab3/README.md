@@ -1,5 +1,13 @@
 
 # Lab 3: MCTS & stochastic games
+Below are the exercises and my responses to them. I aim to only included details (regarding implementation, core concepts, etc.) that I regarded as necessary to get a functional understanding of:
+
+- The conceptual aims of the code
+- The logic of the the code & its connection to the broader algorithm
+- The flow of the logic, including how the broader algorithm's steps are implemented
+
+No more details, and no less.
+
 ## Exercise 1
 ### Introduction
 Tree nodes are implemented in the class `players.basicMCTS.BasicTreeNode` (i.e. the `BasicTreeNode` class in the directory "src/main/java/players/basicMCTS"). This class implements the different functions of MCTS required to be done from a tree node, namely:
@@ -84,7 +92,7 @@ When dealing with two-player adversarial zero-sum games, as the number of iterat
 In the implementation we see, the MCTS agent aims to maximize its UCB1 function as opposed to the other player aiming to minimize the same. We shall see the exact details below.
 
 #### UCB1 calculation
-The UCB1 value is calculated for a given state $s$ and given action $a$ as:
+The UCB1 value is generally calculated for a given state $s$ and given action $a$ as:
 
 $UCB1(s,a)$<br>
 $=ExploitationTerm + ExplorationTerm$<br>
@@ -92,10 +100,12 @@ $=Q(s,a)+K \sqrt{\ln(\frac{N(s)+1}{N(s,a)})}$
 
 where
 
-- $Q(s,a)$ is the reward function returning the reward of action $a$ from state $s$
+- $Q(s,a)$ is the exploitation term based on the reward of action $a$ from state $s$
 - $N(s)$ is the number of times state $s$ has been visited
 - $N(s,a)$ is the number of times action $a$ has been taken from state $s$
 - $K$ is the exploration constant
+
+**SIDE NOTE**: _The simplest exploitation term is the reward function itself (that returns the reward of a given action_ $a$ _from the given state_ $s$_). However, we could make the exploitation term use the reward function in different ways (as we shall see in the implementation in TAG as well)_.
 
 The exploitation term shifts the value toward known high-reward actions, whereas the exploration term shifts the value toward less explored actions (_that could have greater potential reward; we need to explore more to know more_).  In the equation above as well as in the class `players.basicMCTS.BasicMCTSParams`, we see the parameter $K$; this is -- as stated before -- the exploration constant. It is a multiplier in the exploration term and determines the weightage given to the exploration term.
 
@@ -116,7 +126,9 @@ double hvVal = child.totValue;
 double childValue = hvVal / (child.nVisits + player.params.epsilon);
 ```
 
-While I was unable to decipher what `hvVal` meant as such, the value it was assigned to, i.e. `child.totValue`, is the "total value" statistic of the `child` object of the `BasicTreeNode` class, which I assume is the total reward of the node. It is also clear that the child's exploitation value is inversely proportionate to the number of times it was visited. To see why this is done, consider this: if a child has been visited more times yet its `hvVal` remains unchanged, we may have hit a plateau or a limit in child's measure of goodness, thus indicating that the child requires less further exploration. Again, I was unable to understand the purpose of the small constant parameter `player.params.epsilon`. 
+While I was unable to decipher what `hvVal` meant as such, the value it was assigned to, i.e. `child.totValue`, is the "total value" statistic of the `child` object of the `BasicTreeNode` class, which (as we shall see later) is the total reward assigned to the node. We see that **_the exploitation term here is not given by the reward statistic of the child alone, but also based on the number of times the child was visited_** (this is different from the basic formulation of UCB1 we gave above).
+
+It is also clear that the child's exploitation value is inversely proportionate to the number of times it was visited. To see why this is done, consider this: if a child has been visited more times yet its `hvVal` remains unchanged, we may have hit a plateau or a limit in child's measure of goodness, thus indicating that the child requires less further exploration. Again, I was unable to understand the purpose of the small constant parameter `player.params.epsilon`. 
 
 The **_exploration term_** term is given by the following line:
 
@@ -176,7 +188,7 @@ ___
 
 **NOTE: What** `cur` **is initialized to in practice**: In practice, the object calling the `treePolicy`  method is the object that calls the implementation of the MCTS's main loop, i.e. the `mctsSearch` method (also defined within the `BasicTreeNode` class). This is clear when we look at  the code of `mctsSearch`, wherein we see these lines:
 
-**_Viewing some of the code of the_** `mctsSearch` **_method_**...
+**_Viewing a code snippet of the_** `mctsSearch` **_method_**...
 
 ```
 // Selection + expansion: navigate tree until a node not fully expanded is found, add a new node to the tree  
@@ -359,3 +371,61 @@ private boolean finishRollout(AbstractGameState rollerState, int depth) {
 In the `rollout` method, we can see that the opponent model used in a random agent, and we in fact use this random agent to generate a random sequence of actions (which simulate both the basic MCTS agent's and the random agent's actions) to simulate a possible pathway of the game from the current game state. **_Hence, actions in rollout are selected randomly_**.
 
 The `rollout` method keeps track of the rollout depth (i.e. the depth of simulated pathway), and loops rollout steps in a while loop with the terminating condition given by the return value of the `finishRollout` method. `finishRollout` returns true (i.e. a sign to continue the rollout) if the state at the end of the rollout so far is non-terminal AND if the rollout depth limit has not been reached; if either of these conditions is not met, it returns false, indicating that the rollout must end. This limit is given by the parameter `rolloutLength` of the `player` parameter of the `BasicTreeNode` (_this parameter is an object of the class_ `BasicMCTSPlayer` _and contains the parameters necessary to guide search_).
+
+### Response to question 5
+The backpropagation step is implemented using the `backUp` method of the `BasicTreeNode` class:
+
+```
+/**  
+* Back up the value of the child through all parents. Increase number of visits and total value. * * @param result - value of rollout to backup  
+ */private void backUp(double result) {  
+	BasicTreeNode n = this;  
+	while (n != null) {  
+	    n.nVisits++;  
+	    n.totValue += result;  
+	    n = n.parent;  
+	}  
+}
+```
+
+For context, here is the main part of the loop of the `mctsSearch` method where `backUp` is also called:
+
+**_Viewing a code snippet from the_** `mctsSearch` **_method of the_** `BasicTreeNode` **_class_**...
+
+```
+while (!stop) {  
+	// New timer for this iteration  
+	ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();  
+
+	// Selection + expansion: navigate tree until a node not fully expanded is found, add a new node to the tree  
+	BasicTreeNode selected = treePolicy();  
+	// Monte carlo rollout: return value of MC rollout from the newly added node  
+	double delta = selected.rollOut();  
+	// Back up the value of the rollout through the tree  
+	selected.backUp(delta);  
+	// Finished iteration  
+	numIters++;
+	...
+}
+```
+
+Hence, we see the following:
+
+1.<br>
+In every iteration of the MCTS loop, we select a new node to rollout from
+
+2.<br>
+At the end of the rollout, the `rollout` method returns a value based on the value estimated/calculated for its last state as follows:
+
+**_Viewing a code snippet from the_** `rollout` **_method of the_** `BasicTreeNode` **_class_**...
+
+```
+double value = player.params.getHeuristic().evaluateState(rolloutState, player.getPlayerID());
+```
+
+In `mctsSearch`, this return value is stored in the variable `delta`.
+
+3.<br>
+`delta`  is used in the `backUp` function to add to the `totValue` parameter (denoting the reward statistic of the node) of the selected node and its parents (all the way up to the root, which has no parent; the `parent` parameter for the root will be given as `null`). The number of visits for the selected node as well as its parents is incremented by one each (since to visit the selected node, we had to visit its parents as well).
+
+**NOTE**: In basic MCTS, the nodes generated during rollout are not added to the search tree. Also, except for the state at the end of the rollout, none of their statistics evaluated either. The state at the end of the rollout is evaluated to indicate the reward of the pathway that led to it, but this evaluation is not assigned to this end state; it is instead returned to help update the reward of the selected node of the MCTS search iteration.
