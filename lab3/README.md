@@ -300,5 +300,62 @@ private void advance(AbstractGameState gs, AbstractAction act) {
 
 Without going into every detail, we see that this method uses the forward model to obtain the next state (represented by a node in turn represented by a`BasicTreeNode` object) based on a particular action `act` action applied to the current state `gs` (stands for "game state"). The forward model method used updates `gs` and `act`, wherein `gs` becomes the next node reached (_I am not sure how or why_ `act` _is updated;_ `AbstractAction` _objects can be updated and each is unique (and can serve as a unique key) even if they have identical parameter values_).
 
+**SIDE NOTE**: _The_ `player` _identifier that calls the_ `getForwardModel` _method is in fact the_ `player` _parameter of the_ `BasicTreeNode` _object in question. This parameter is defined as_...
+
+```
+// Parameters guiding the search  
+private BasicMCTSPlayer player;
+```
+
+... _and, as the comment says, it contains all the parameters needed to guide (or control) the search_.
+
 **_The_** `children.put` **_method used in the_** `expand` **_method_**...<br>
 `.put` used here is a utility method defined for hash maps (remember that `children` is a hash map), with the syntax `myHashMap.put(key, value)`. In our case, we are assigning the value of the key `chosen` (denoting a certain action from the current node) as `tn` defined in the `expand` function as `BasicTreeNode tn = new BasicTreeNode(player, this, nextState, rnd);`, i.e. the node reachable by the given action from the current node. In this way, we are marking the action denoted by `chosen` as expanded.
+
+### Response to question 4
+The rollout stage is carried out by the `rollout` method of the `BasicTreeNode` class, and this method in turn uses the `finishRollout`
+
+**_The main_** `rollout method`:
+
+```
+/**  
+* Perform a Monte Carlo rollout from this node. * * @return - value of rollout.  
+*/private double rollOut() {  
+	int rolloutDepth = 0; // counting from end of tree  
+	 // If rollouts are enabled, select actions for the rollout in line with the rollout policy
+	AbstractGameState rolloutState = state.copy();  
+	if (player.params.rolloutLength > 0) {
+		while (!finishRollout(rolloutState, rolloutDepth)) {
+			AbstractAction next = randomPlayer.getAction(rolloutState, randomPlayer.getForwardModel().computeAvailableActions(rolloutState, randomPlayer.parameters.actionSpace));
+			advance(rolloutState, next);
+			rolloutDepth++;
+			}
+		}  
+	// Evaluate final state and return normalised score  
+	double value = player.params.getHeuristic().evaluateState(rolloutState, player.getPlayerID());  
+	if (Double.isNaN(value))  
+	  throw new AssertionError("Illegal heuristic value - should be a number");  
+	return value;  
+}  
+```
+
+**_The_** `finishRollout` **_method_**:
+
+```
+/**  
+* Checks if rollout is finished. Rollouts end on maximum length, or if game ended. * * @param rollerState - current state  
+* @param depth - current depth  
+* @return - true if rollout finished, false otherwise  
+*/
+private boolean finishRollout(AbstractGameState rollerState, int depth) {  
+	if (depth >= player.params.rolloutLength)  
+		return true;  
+	 
+	 // End of game  
+	return !rollerState.isNotTerminal();  
+}
+```
+
+In the `rollout` method, we can see that the opponent model used in a random agent, and we in fact use this random agent to generate a random sequence of actions (which simulate both the basic MCTS agent's and the random agent's actions) to simulate a possible pathway of the game from the current game state. **_Hence, actions in rollout are selected randomly_**.
+
+The `rollout` method keeps track of the rollout depth (i.e. the depth of simulated pathway), and loops rollout steps in a while loop with the terminating condition given by the return value of the `finishRollout` method. `finishRollout` returns true (i.e. a sign to continue the rollout) if the state at the end of the rollout so far is non-terminal AND if the rollout depth limit has not been reached; if either of these conditions is not met, it returns false, indicating that the rollout must end. This limit is given by the parameter `rolloutLength` of the `player` parameter of the `BasicTreeNode` (_this parameter is an object of the class_ `BasicMCTSPlayer` _and contains the parameters necessary to guide search_).
