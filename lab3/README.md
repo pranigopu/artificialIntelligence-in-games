@@ -1,3 +1,4 @@
+
 # Lab 3: MCTS & stochastic games
 ## Exercise 1
 ### Introduction
@@ -202,6 +203,102 @@ The while loop of the `treePolicy` method does the following:
 
 **CONCEPTUAL NOTE**: _A node is expanded if all its children have been visited/generated and unexpanded if even one of its children has not been visited/generated in the search tree_.
 
-**TECHNICAL NOTE**: _The potential children of a node are known based on the available actions possible from this node, with the forward model enabling us to see what states these actions would lead to. However, to create or generate a child is to actually create the node object representing it, which is only done in the expansion stage_.
+**TECHNICAL NOTE**: _The potential children of a node are known based on the available actions possible from this node, with the forward model enabling us to see what states these actions would lead to. However, to create or generate a child is to actually create the node object representing it, which is only done in the expansion stage. In the TAG framework's_  `BasicTreeNode` _class, the children of a node (created or not) are accessible via the parameter_ `Map<AbstractAction, BasicTreeNode> children = new HashMap<>();`.
 
 **_Thus, the selection step stops as soon as we select an unexpanded node_**. This makes sense, because if a node is unexpanded, we have actions we have not even considered; thus, before further evaluation or expansion of the other actions, we must first at least initially evaluate all the actions of a given node.
+
+### Response to question 3
+To see how an action is selected in the expansion stage to add a new node, we must look at the `.expand` method of the `BasicTreeNode` class, which actually performs this step:
+
+```
+private BasicTreeNode expand() {  
+	// Find random child not already created  
+	Random r = new Random(player.params.getRandomSeed());  
+	// pick a random unchosen action  
+	List<AbstractAction> notChosen = unexpandedActions();  
+	AbstractAction chosen = notChosen.get(r.nextInt(notChosen.size()));  
+
+	// copy the current state and advance it using the chosen action  
+	// we first copy the action so that the one stored in the node will not have any state changes
+	AbstractGameState nextState = state.copy();  
+	advance(nextState, chosen.copy());  
+
+	// then instantiate a new node  
+	BasicTreeNode tn = new BasicTreeNode(player, this, nextState, rnd);  
+	children.put(chosen, tn);  
+	return tn;  
+}
+```
+
+From the list of unexpanded actions of the current node (these unexpanded actions being assigned to the variable `notChosen`), an action is chosen at random and assigned to the `chosen` variable:
+
+```
+AbstractAction chosen = notChosen.get(r.nextInt(notChosen.size()));
+```
+
+The identifier `state` in the line `AbstractGameState nextState = state.copy();` refers to the `state` parameter of the `BasicTreeNode` class, defined as:
+
+**_Viewing some other code of the_** `BasicTreeSearch` **_class_**...
+
+```
+// State in this node (closed loop)  
+private AbstractGameState state;
+```
+
+**TECHNICAL NOTE 1**: _In the_ `expand` _method, we make a deep copy of the state_ **_(every_** `.copy` **_method of any class in TAG creates a deep copy of the calling object)_** _and the action (of the given node, represented by its children) because the_ `advance` _function used to get the next state (given the chosen action) would actually alter the state variable itself as well as the actions available from this state (i.e. the children possible from this given state); we want to preserve the original parameters, as they belong to the main_ `BasicTreeNode` _object that is calling this_ `expand` _method_.
+
+**TECHNICAL NOTE 2**: _The line_ `BasicTreeNode tn = new BasicTreeNode(player, this, nextState, rnd);` _creates the child node (denoted by the identifier_ `tn` _here, with_ `this` _(i.e. the current node) given as its_ `parent` _parameter value and_ `nextState` _given as its_ `state` _parameter value_.
+
+Using the line...
+
+```
+advance(nextState, chosen.copy());
+```
+
+... we obtain the next state that corresponds to the action chosen `chosen` from the current state. **_In short, we see that the action from the current state is selected at random in the expansion step_**. _Note that just by creating this next node reached (representing the next state), we are also adding it to the search tree (since we give its parent as the current state, thus keeping preserving tree-hierarchy)_.
+
+___
+
+**_Deviating & going deeper into some the code_**...
+
+Here, we shall see the nature and function of the following parameters and methods used in the `expand` method given above:
+
+- The `children` parameter of the `BasicTreeNode` class
+- The `unexpandedActions` method of the `BasicTreeNode` class
+- The `unexpandedActions` method of the `BasicTreeNode` class
+- The `children.put` method used in the `expand function`
+
+The children of a node and by extension its available actions are represented by the `children` parameter of the `BasicTreeNode` class, defined as:
+
+**_Viewing the definition of the_** `children` **_parameter of the_** `BasicTreeNode` **_class_**...
+```
+// Children of this node  
+Map<AbstractAction, BasicTreeNode> children = new HashMap<>();
+```
+
+We see that `children` is in fact a hash map (more concretely, an object of class `HashMap`) whose keys are `AbstractAction` objects (_denoting available actions_) and whose values (to which these actions relate to one-to-one) are `BasicTreeNode` objects (_representing the states corresponding to each action_). Clearly, the `children` parameter is a hash map relating each available action from the current state (represented by the current node) to the state it will reach. Initially, when the current node is unexplored, the values of the hash map are empty, i.e. each key relates to a `null` value; a `null` value for a key (i.e. action) means that the respective action has not been expanded yet. Consequently, once a value (i.e. a node) is added for a key, we will know that the respective action _has_ been expanded. This is how we check for unexpanded actions.
+
+**_Viewing the definition of the_** `unexpandedActions` **_method of the_** `BasicTreeNode` **_class_**...
+
+```
+private List<AbstractAction> unexpandedActions() {
+	return children.keySet().stream().filter(a -> children.get(a) == null).collect(toList());  
+}
+```
+
+Without going into every detail, we can see that the `unexpandedActions` method returns the list of `AbstractAction` objects representing the unexpanded actions (thus by extension the unexpanded children) of the `BasicTreeNode` object for which this method applies. Note that the `children.get` method is a utility function for hash maps that returns the value for the key `a` (remember that the `children` is a hash map); in our case, the key is a particular action and the value is either `null` (meaning the action has not been explored) or a particular node object (meaning that the action has been explored).
+
+
+**_Viewing the definition of the_** `advance` **_method of the_** `BasicTreeNode` **_class_**...
+
+```
+private void advance(AbstractGameState gs, AbstractAction act) {  
+	player.getForwardModel().next(gs, act);  
+	root.fmCallsCount++;  
+}
+```
+
+Without going into every detail, we see that this method uses the forward model to obtain the next state (represented by a node in turn represented by a`BasicTreeNode` object) based on a particular action `act` action applied to the current state `gs` (stands for "game state"). The forward model method used updates `gs` and `act`, wherein `gs` becomes the next node reached (_I am not sure how or why_ `act` _is updated;_ `AbstractAction` _objects can be updated and each is unique (and can serve as a unique key) even if they have identical parameter values_).
+
+**_The_** `children.put` **_method used in the_** `expand` **_method_**...<br>
+`.put` used here is a utility method defined for hash maps (remember that `children` is a hash map), with the syntax `myHashMap.put(key, value)`. In our case, we are assigning the value of the key `chosen` (denoting a certain action from the current node) as `tn` defined in the `expand` function as `BasicTreeNode tn = new BasicTreeNode(player, this, nextState, rnd);`, i.e. the node reachable by the given action from the current node. In this way, we are marking the action denoted by `chosen` as expanded.
