@@ -198,8 +198,10 @@ The while loop of the `treePolicy` method does the following:
 	- The particular child is retrieved using `cur.children.get(actionChosen)`
 	- The loop continues with the selected child as the current node `cur`
 
-**RECALL**: _A child represents a node, but since it is obtainable from a particular action from the given state, it can also be used to represent the particular action (i.e. the particular branch). But technically, as such, it is a node_.
+**RECALL NOTE**: _A child represents a node, but since it is obtainable from a particular action from the given state, it can also be used to represent the particular action (i.e. the particular branch). But technically, as such, it is a node_.
 
-**TERMINOLOGY NOTE**: _A node is expanded if all its children have been visited/generated and unexpanded if even one of its children has not been visited/generated in the search tree_.
+**CONCEPTUAL NOTE**: _A node is expanded if all its children have been visited/generated and unexpanded if even one of its children has not been visited/generated in the search tree_.
+
+**TECHNICAL NOTE**: _The potential children of a node are known based on the available actions possible from this node, with the forward model enabling us to see what states these actions would lead to. However, to create or generate a child is to actually create the node object representing it, which is only done in the expansion stage_.
 
 **_Thus, the selection step stops as soon as we select an unexpanded node_**. This makes sense, because if a node is unexpanded, we have actions we have not even considered; thus, before further evaluation or expansion of the other actions, we must first at least initially evaluate all the actions of a given node.
