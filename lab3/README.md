@@ -151,7 +151,7 @@ uctValue += explorationTerm;
 To elaborate, if it is the opponent's turn, the UCB1 value is minimized by subtracting the exploitation term, i.e. the child's value `childValue` (assumed to be positive) from the exploration term `explorationTerm`. If it is the given agent's turn, these terms are added instead. Clearly, the `state.getCurrentPlayer() == player.getPlayerID()` return value (assigned to the variable `iAmMoving`) is a Boolean value that informs whether the given agent is playing at a certain level in the tree or not.
 
 ### Response to question 2
-For reference, here is the code for the `treePolicy` function that, as the name suggests, enforces the tree policy, i.e. decides how the next node to be expanded must be selected. In this implementation, this function also performs the expansion step:
+For reference, here is the code for the `treePolicy` method (defined within the `BasicTreeNode` class) that, as the name suggests, enforces the tree policy, i.e. decides how the next node to be expanded must be selected. In this implementation, this function also performs the expansion step:
 
 ```
 private BasicTreeNode treePolicy() {  
@@ -174,7 +174,7 @@ private BasicTreeNode treePolicy() {
 	return cur;  
 }
 ```
- As can be seen in the while loop, the selection step stops when the current node being considered is unexpanded. How is this node selected? To begin with, the current node is the the `BasicTreeNode` object that calls this method (note that this method is defined within the `BasicTreeNode` class). This is seen here:
+ As can be seen in the while loop, the selection step stops when the current node being considered is unexpanded. How is this node selected? To begin with, the current node is the the `BasicTreeNode` object that calls this method. This is seen here:
 
 ```
 BasicTreeNode cur = this;  
