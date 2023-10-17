@@ -115,7 +115,7 @@ double hvVal = child.totValue;
 double childValue = hvVal / (child.nVisits + player.params.epsilon);
 ```
 
-While I was unable to decipher what `hvVal` meant as such, it is clear that the child's exploitation value is inversely proportionate to the number of times it was visited. To see why this is done, consider this: if a child has been visited more times yet its `hvVal` remains unchanged, we may have hit a plateau or a limit in child's measure of goodness, thus indicating that the child requires less further exploration. Again, I was unable to understand the purpose of the small constant parameter `player.params.epsilon`. 
+While I was unable to decipher what `hvVal` meant as such, the value it was assigned to, i.e. `child.totValue`, is the "total value" statistic of the `child` object of the `BasicTreeNode` class, which I assume is the total reward of the node. It is also clear that the child's exploitation value is inversely proportionate to the number of times it was visited. To see why this is done, consider this: if a child has been visited more times yet its `hvVal` remains unchanged, we may have hit a plateau or a limit in child's measure of goodness, thus indicating that the child requires less further exploration. Again, I was unable to understand the purpose of the small constant parameter `player.params.epsilon`. 
 
 The **_exploration term_** term is given by the following line:
 
@@ -136,3 +136,70 @@ uctValue += explorationTerm;
 ```
 
 To elaborate, if it is the opponent's turn, the UCB1 value is minimized by subtracting the exploitation term, i.e. the child's value `childValue` (assumed to be positive) from the exploration term `explorationTerm`. If it is the given agent's turn, these terms are added instead. Clearly, the `state.getCurrentPlayer() == player.getPlayerID()` return value (assigned to the variable `iAmMoving`) is a Boolean value that informs whether the given agent is playing at a certain level in the tree or not.
+
+### Response to question 2
+For reference, here is the code for the `treePolicy` function that, as the name suggests, enforces the tree policy, i.e. decides how the next node to be expanded must be selected. In this implementation, this function also performs the expansion step:
+
+```
+private BasicTreeNode treePolicy() {  
+  
+	BasicTreeNode cur = this;  
+
+	// Keep iterating while the state reached is not terminal and the depth of the tree is not exceeded  
+	while (cur.state.isNotTerminal() && cur.depth < player.params.maxTreeDepth) {  
+	    if (!cur.unexpandedActions().isEmpty()) {  
+	        // We have an unexpanded action  
+	cur = cur.expand();  
+	        return cur;  
+	    } else {  
+	        // Move to next child given by UCT function  
+	AbstractAction actionChosen = cur.ucb();  
+	        cur = cur.children.get(actionChosen);  
+	    }  
+	}  
+
+	return cur;  
+}
+```
+ As can be seen in the while loop, the selection step stops when the current node being considered is unexpanded. How is this node selected? To begin with, the current node is the the `BasicTreeNode` object that calls this method (note that this method is defined within the `BasicTreeNode` class). This is seen here:
+
+```
+BasicTreeNode cur = this;  
+```
+
+ `cur` refers to the current node being considered and `this` refers to the `BasicTreeNode` object that calls this method. 
+
+___
+
+**_Small deviation from the main question_**...
+
+**NOTE: What** `cur` **is initialized to in practice**: In practice, the object calling the `treePolicy`  method is the object that calls the implementation of the MCTS's main loop, i.e. the `mctsSearch` method (also defined within the `BasicTreeNode` class). This is clear when we look at  the code of `mctsSearch`, wherein we see these lines:
+
+**_Viewing some of the code of the_** `mctsSearch` **_method_**...
+
+```
+// Selection + expansion: navigate tree until a node not fully expanded is found, add a new node to the tree  
+BasicTreeNode selected = treePolicy();
+```
+
+Here, we see that the object running the MCTS search also calls upon the `treePolicy` method to select nodes; thus, the `treePolicy` method begins from the node denoted by this object. In theory, this node can be any `BasicTreeNode` object, but in practice, it is generally the root node of the current MCTS (i.e. the tree search performed in the current move of the player) that alone calls upon the `mctsSearch`. This can be confirmed by checking the calls of `mctsSearch` in the project files of TAG.
+
+**SIDE NOTE: The structure of a** `BasicTreeNode` **object**: The `BasicTreeNode` class is a way to encapsulate a node, and naturally, it contains a reference to its parent node and means to obtain its children. An object of this class does represent a node but not necessarily the root node; every object of this class contains a reference to the actual root of the current MCTS search tree in the `BasicTreeNode root` parameter.
+
+___
+
+**_Back to the main question_**...
+
+The while loop of the `treePolicy` method does the following:
+
+- If the current node is unexpanded, it expands it, i.e. generates one child & returns this child
+- If the current node is expanded, one of its children is selected based on the which has the maximum UCB1 value
+	- The UCB1 value is calculated in the `.ucb` method
+	- The particular child is retrieved using `cur.children.get(actionChosen)`
+	- The loop continues with the selected child as the current node `cur`
+
+**RECALL**: _A child represents a node, but since it is obtainable from a particular action from the given state, it can also be used to represent the particular action (i.e. the particular branch). But technically, as such, it is a node_.
+
+**TERMINOLOGY NOTE**: _A node is expanded if all its children have been visited/generated and unexpanded if even one of its children has not been visited/generated in the search tree_.
+
+**_Thus, the selection step stops as soon as we select an unexpanded node_**. This makes sense, because if a node is unexpanded, we have actions we have not even considered; thus, before further evaluation or expansion of the other actions, we must first at least initially evaluate all the actions of a given node.
