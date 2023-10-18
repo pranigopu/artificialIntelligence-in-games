@@ -148,7 +148,9 @@ double uctValue = iAmMoving ? childValue : -childValue;
 uctValue += explorationTerm;
 ```
 
-To elaborate, if it is the opponent's turn, the UCB1 value is minimized by subtracting the exploitation term, i.e. the child's value `childValue` (assumed to be positive) from the exploration term `explorationTerm`. If it is the given agent's turn, these terms are added instead. Clearly, the `state.getCurrentPlayer() == player.getPlayerID()` return value (assigned to the variable `iAmMoving`) is a Boolean value that informs whether the given agent is playing at a certain level in the tree or not.
+To elaborate, if an available action is considered as within the opponent's turn, the UCB1 value for it is minimized by subtracting the exploitation term, i.e. the child's value `childValue` (assumed to be positive) from the exploration term `explorationTerm`. If it is the given agent's turn, these terms are added instead. Clearly, the `state.getCurrentPlayer() == player.getPlayerID()` return value (assigned to the variable `iAmMoving`) is a Boolean value that informs whether the given agent is playing at a certain level in the tree or not.
+
+**NOTE**: The opponent's moves are being considered from the perspective of the playing agent itself as it tries to estimate future outcomes of the game (which is two-player, zero-sum and adversarial).
 
 ### Response to question 2
 For reference, here is the code for the `treePolicy` method (defined within the `BasicTreeNode` class) that, as the name suggests, enforces the tree policy, i.e. decides how the next node to be expanded must be selected. In this implementation, this function also performs the expansion step:
