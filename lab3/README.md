@@ -128,7 +128,7 @@ double childValue = hvVal / (child.nVisits + player.params.epsilon);
 
 While I was unable to decipher what `hvVal` meant as such, the value it was assigned to, i.e. `child.totValue`, is the "total value" statistic of the `child` object of the `BasicTreeNode` class, which (as we shall see later) is the total reward assigned to the node. We see that **_the exploitation term here is not given by the reward statistic of the child alone, but also based on the number of times the child was visited_** (this is different from the basic formulation of UCB1 we gave above).
 
-It is also clear that the child's exploitation value is inversely proportionate to the number of times it was visited. To see why this is done, consider this: if a child has been visited more times yet its `hvVal` remains unchanged, we may have hit a plateau or a limit in child's measure of goodness, thus indicating that the child requires less further exploration. Again, I was unable to understand the purpose of the small constant parameter `player.params.epsilon`. 
+It is also clear that the child's exploitation value is inversely proportionate to the number of times it was visited. To see why this is done, consider this: if a child has been visited more times yet its `hvVal` remains unchanged, we may have hit a plateau or a limit in the child's measure of goodness, thus indicating that the child requires less further exploration. Again, I was unable to understand the purpose of the small constant parameter `player.params.epsilon`. 
 
 The **_exploration term_** term is given by the following line:
 
