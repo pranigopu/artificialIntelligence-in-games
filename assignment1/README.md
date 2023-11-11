@@ -24,3 +24,28 @@ Malo Hamon’s major contributions to the agent's code were the implementation a
 I worked on the implementation and testing of ISMCTS , but my implementation was faulty, showed mediocre results, and thus, was not included in the submission. I also tested the effect of progressive bias for the tree policy, which was negligible and also left out of the final report. Hence, I did not contribute to the final agent's code. For the group report, I wrote the background section explaining the MCTS algorithm and the method section for multi-root MCTS along with the pseudocode. I also configured and ran the conclusive experiment that compared our team's MCTS variants, whose results were processed and presented by Malo. Finally, I wrote the sections explaining the exploration-exploitation dilemma (prelude to sampling methods) and the partial observability problem (prelude to multi-root MCTS).
 
 This project pushed me to understand how the theoretical concepts learnt in lectures could be implemented, and my teammates’ initiative exposed me to new areas of RL  and bandit methods.
+
+## Personal notes on the project
+### About Sushi Go
+Sushi Go's key features to consider...
+
+- Strategy revolves around how to select the cards from the hand you are passed
+  - NOTE: The card groups being first distributed then passed can be considered random
+- You know about the deck overall & the card-based point system
+- You can see all your own cards & hand as well as others' face-up cards (but not their hands)
+  - The adversarial aspect is based on what cards you let or don't let your opponents have based on their face-up cards
+- Each round is mostly independent of the previous rounds, except for the pastry card
+- Collection of pastry must be evaluated against other options; thus, actions can have effects between rounds
+- Each decision tree is as follows (per turn)
+  - Root node: Current game state
+  - Branch: Action of picking one or more cards (minimum 1, maximum 2)
+- Environment
+  - Discrete (due to discrete-valued outcome parameters)
+  - Partial information
+  - Stochastic
+    - Though point system is mostly fixed, parts of it rely on what others get
+    - What everyone gets is randomized, thus creating a stochastic environment
+- Complexity
+  - High branching factor (many possible card combinations to pick)
+  - Deep tree with long-ranging decisions
+    - $\implies$ High-reward long-range strategies that may lead to seemingly lower advantages short-range
