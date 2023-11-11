@@ -26,7 +26,6 @@ I worked on the implementation and testing of ISMCTS , but my implementation was
 This project pushed me to understand how the theoretical concepts learnt in lectures could be implemented, and my teammates’ initiative exposed me to new areas of reinforcement learning and bandit methods.
 
 [^1]:As per: http://proceedings.mlr.press/v22/kaufmann12/kaufmann12.pdf
-
 [^2]:As per: https://ceur-ws.org/Vol-2862/paper27.pdf
 
 ## Personal notes on the project
@@ -70,8 +69,9 @@ RHEA uses evolutionary search of pathways to obtain the (supposed) best sequence
 The question is: _why would we choose one over the other? Which approach is better suited for us and why_?
 
 The answer is not immediately obvious in theory, which raises the need for experimentation. However, we aim to experiment in a way that helps us answer the following questions:
-What base approach (inferential statistics or evolutionary methods) is better suited to dealing with stochastic, partial information and discrete domains and why?
-What enhancements to each base approach would elevate the performance of each approach and:
-Why do these enhancements have their effect?
-Which base approach has more potential (in theory) of dealing with stochastic, partial information and discrete domains, with the help of enhancements?
+
+- What base approach (inferential statistics or evolutionary methods) is better suited to dealing with stochastic, partial information and discrete domains and why?
+- What enhancements to each base approach would elevate the performance of each approach?
+  - Why do these enhancements have their effect?
+- Which base approach has more potential (in theory) of dealing with stochastic, partial information and discrete domains, with the help of enhancements?
 
