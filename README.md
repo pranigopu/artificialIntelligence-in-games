@@ -1,10 +1,13 @@
-# Artificial intelligence in games
+ # Artificial intelligence in games (AIG)
 Code from my learnings in the first semester module "Artificial Intelligence in Games" of my MSc. AI degree.
 
 ## Lab sessions list
 - Lab 1: Getting started with TAG (Tabletop Games Framework)
 - Lab 2: Game states, forward models & AI agents (TAG)
 - Lab 3: MCTS & stochastic games
+- Assignment 1: Creating an AI agent to play Sushi Go (using TAG)
+  - **NOTE**: _This was a team project_
+  - The assignment involves code (repository linked) & written report (file attached)
 
 ## GitHub-related notes
 - Cloning a GitHub repository simply means downloading a copy of it on your system
