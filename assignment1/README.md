@@ -70,8 +70,8 @@ The question is: _why would we choose one over the other? Which approach is bett
 
 The answer is not immediately obvious in theory, which raises the need for experimentation. However, we aim to experiment in a way that helps us answer the following questions:
 
-- What base approach (inferential statistics or evolutionary methods) is better suited to dealing with stochastic, partial information and discrete domains and why?
-- What enhancements to each base approach would elevate the performance of each approach?
-  - Why do these enhancements have their effect?
-- Which base approach has more potential (in theory) of dealing with stochastic, partial information and discrete domains, with the help of enhancements?
+- _What base approach (inferential statistics or evolutionary methods) is better suited to dealing with stochastic, partial information and discrete domains & why_?
+- _What enhancements to each base approach would elevate the performance of each approach_?
+- _Why do these enhancements have their effect_?
+- _Which base approach has more potential (in theory) of dealing with stochastic, partial information and discrete domains, with the help of enhancements_?
 
