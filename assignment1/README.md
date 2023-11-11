@@ -30,12 +30,15 @@ This project pushed me to understand how the theoretical concepts learnt in lect
 Sushi Go's key features to consider...
 
 - Strategy revolves around how to select the cards from the hand you are passed
-  - NOTE: The card groups being first distributed then passed can be considered random
+  - **NOTE**: _The card groups being first distributed then passed can be considered random_
 - You know about the deck overall & the card-based point system
-- You can see all your own cards & hand as well as others' face-up cards (but not their hands)
-  - The adversarial aspect is based on what cards you let or don't let your opponents have based on their face-up cards
-- Each round is mostly independent of the previous rounds, except for the pastry card
-- Collection of pastry must be evaluated against other options; thus, actions can have effects between rounds
+- You can see all your own cards & hand as well as others' face-up cards
+  - But not their hands (i.e. the cards the hold)
+  - Adversarial aspect is based on what cards you let or don't let your opponents have
+    - Such a decision is based on their face-up cards
+- Each round is mostly independent of the previous rounds<br>(_except for the pastry card_)
+- Collection of pastry must be evaluated against other options
+  - $\implies$ Actions can have effects between rounds
 - Each decision tree is as follows (per turn)
   - Root node: Current game state
   - Branch: Action of picking one or more cards (minimum 1, maximum 2)
