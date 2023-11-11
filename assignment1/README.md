@@ -4,7 +4,7 @@ This was a team project consisting of Graham Innocent, Malo Hamon and myself (Pr
 **Team project repository**: https://github.com/grahaminn/AIinGames-Assignment1
 
 ## TAG (the benchmark to be used in the project)
-For our project, we were supposed to use the TAG (<u>TA</u>bletop <u>G</u>ames) framework. TAG is a Java-based benchmark for developing board games for AI research. TAG offers the following:
+For our project, we were supposed to use the TAG (<ins>TA</ins>bletop <ins>G</ins>ames) framework. TAG is a Java-based benchmark for developing board games for AI research. TAG offers the following:
 
 - A common API for AI agents to communicate with each other
 - A set of modules and packages to help add new games
