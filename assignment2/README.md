@@ -4,5 +4,5 @@ This assignment focuses on implementing various concepts of reinforcement learni
 
 ## Project repository link per team member:
 
-- Prani Gopu a.k.a. Pranav Gopalkrishna: [frozenLake](https://github.com/pranigopu/frozenLake)
-- Malo Hamon: [ecs7002_assignment_2](https://github.com/nocommentcode/ecs7002_assignment_2)
+- Prani Gopu a.k.a. Pranav Gopalkrishna:<br>[frozenLake](https://github.com/pranigopu/frozenLake)
+- Malo Hamon:<br>[ecs7002_assignment_2](https://github.com/nocommentcode/ecs7002_assignment_2)
