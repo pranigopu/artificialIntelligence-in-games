@@ -8,6 +8,9 @@ Code from my learnings in the first semester module "Artificial Intelligence in 
 - Assignment 1: Creating an AI agent to play Sushi Go (using TAG)
   - **NOTE**: _This was a team project_
   - The assignment involves code (repository linked) & written report (file attached)
+ - Assignment 2: Reinforcement learning
+  - **NOTE**: _This was a team project, but each worked individually except for the report_
+  - The assignment involves code (repositories linked) & written report (file attached)
 
 ## GitHub-related notes
 - Cloning a GitHub repository simply means downloading a copy of it on your system
