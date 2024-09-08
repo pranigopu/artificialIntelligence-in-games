@@ -1,9 +1,14 @@
 # AIG: Assignment 1<br> _Creating an AI agent Sushi Go_
-This was a team project consisting of Graham Innocent, Malo Hamon and myself (Pranav Gopalkrishna), The focus of this project was to implement and compare sampling methods that serve as alternative bandit methods to the default/common upper confidence bound (UCB1) tree policy. Our project also focused on finding ways to augment these methods with functional enhancements to the core Monte Carlo tree search (MCTS) algorithm, namely pruning (to manage the search space), multi-root MCTS and information set MCTS (ISMCTS) (both to account for partial observability), as well as additional heuristics such as all-moves-as-first (AMAF) heuristics and the related method rapid action value estimation (RAVE).
+
+---
 
 **Team project repository**: https://github.com/grahaminn/AIinGames-Assignment1
 
 **Project report**: https://github.com/pranigopu/artificialIntelligence-in-games/blob/main/assignment1/REPORT.pdf
+
+---
+
+This was a team project consisting of Graham Innocent, Malo Hamon and myself (Pranav Gopalkrishna), The focus of this project was to implement and compare sampling methods that serve as alternative bandit methods to the default/common upper confidence bound (UCB1) tree policy. Our project also focused on finding ways to augment these methods with functional enhancements to the core Monte Carlo tree search (MCTS) algorithm, namely pruning (to manage the search space), multi-root MCTS and information set MCTS (ISMCTS) (both to account for partial observability), as well as additional heuristics such as all-moves-as-first (AMAF) heuristics and the related method rapid action value estimation (RAVE).
 
 ## TAG (the benchmark to be used in the project)
 For our project, we were supposed to use the TAG (<ins>TA</ins>bletop <ins>G</ins>ames) framework. TAG is a Java-based benchmark for developing board games for AI research. TAG offers the following:
