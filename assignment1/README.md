@@ -3,6 +3,8 @@ This was a team project consisting of Graham Innocent, Malo Hamon and myself (Pr
 
 **Team project repository**: https://github.com/grahaminn/AIinGames-Assignment1
 
+**Project report**: https://github.com/pranigopu/artificialIntelligence-in-games/blob/main/assignment1/REPORT.pdf
+
 ## TAG (the benchmark to be used in the project)
 For our project, we were supposed to use the TAG (<ins>TA</ins>bletop <ins>G</ins>ames) framework. TAG is a Java-based benchmark for developing board games for AI research. TAG offers the following:
 
