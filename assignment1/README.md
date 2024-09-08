@@ -2,9 +2,7 @@
 
 ---
 
-**Team project repository**: https://github.com/grahaminn/AIinGames-Assignment1
-
-**Project report**: https://github.com/pranigopu/artificialIntelligence-in-games/blob/main/assignment1/REPORT.pdf
+[**Team project repository**](https://github.com/grahaminn/AIinGames-Assignment1) | [**Project report**](https://github.com/pranigopu/artificialIntelligence-in-games/blob/main/assignment1/REPORT.pdf)
 
 ---
 
